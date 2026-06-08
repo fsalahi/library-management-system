@@ -1,0 +1,18 @@
+# Notes of library system project
+
+## Review:
+- self in classes: represents the specific instance of the class that is currently being built or called. In python, objects are explicitly passed as the first argument of the class.
+- __init__: automatic setup to configure data the moment we instantiate a class
+- Simply put, we need __init__ to set up object's data, and self to remember that data later.
+
+
+## Better coding practices
+- look at function available_books() in library.py
+    expression
+    for item
+    in iterable
+    if condition
+
+- look at return statement in search_book in Library.py
+    this lists all matching books. what if you want to stop the scan once you found the first match? then use next(). something like this: return next(
+    (book.title for book in self.books if keyword.lower() in book.title.lower()), None)
