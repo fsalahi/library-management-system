@@ -16,3 +16,16 @@
 - look at return statement in search_book in Library.py
     this lists all matching books. what if you want to stop the scan once you found the first match? then use next(). something like this: return next(
     (book.title for book in self.books if keyword.lower() in book.title.lower()), None)
+
+
+## Steps I take when initializing a project
+    - create folder and files structure
+    - inside: git init
+    - create .gitignore file and inside I list things that I want to exclude from pushing to github
+    - create virtual env and activate it
+    - install needed packages and save them (freeze) in requirements.txt
+    - make your first commit
+    - make repository in github
+    connect local git to github (git remote add origin [url to repository])
+    - git push -u origin main
+    
