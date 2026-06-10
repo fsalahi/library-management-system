@@ -1,23 +1,24 @@
 
 import exceptions
+from models.book import Book
 
 class Library:
     def __init__(
             self,
             books
-    ):
-        self.books = []
+    ) -> None:
+        self.books : list[Book] = []
 
-    def add_book(self, book):
+    def add_book(self, book : Book) -> None:
         self.books.append(book)
 
     
-    def show_books(self):
+    def show_books(self) -> None:
         for book in self.books:
             print(book.title)
 
     #practice better coding
-    def available_books(self):
+    def available_books(self) -> list[str]:
         return [
                     book.title 
                     for book in self.books
@@ -25,7 +26,7 @@ class Library:
                 ]
 
 
-    def search_book(self, keyword):
+    def search_book(self, keyword : str) -> list[str]:
         return[
                 book.title
                 for book in self.books
@@ -33,7 +34,7 @@ class Library:
         ]
 
     
-    def remove_book(self, bookObj):
+    def remove_book(self, bookObj : Book) -> None:
         try:
             for book in self.books:
                 if book.title == bookObj.title and book.author == bookObj.author:
