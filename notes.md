@@ -17,6 +17,8 @@
     this lists all matching books. what if you want to stop the scan once you found the first match? then use next(). something like this: return next(
     (book.title for book in self.books if keyword.lower() in book.title.lower()), None)
 
+- Use type hints: they explicitly declare what data types variables, function arguments, and return values should be, but do not enforce types at runtime.
+
 
 ## Steps I take when initializing a project
     - create folder and files structure
@@ -28,4 +30,4 @@
     - make repository in github
     connect local git to github (git remote add origin [url to repository])
     - git push -u origin main
-    
+
