@@ -19,6 +19,10 @@
 
 - Use type hints: they explicitly declare what data types variables, function arguments, and return values should be, but do not enforce types at runtime.
 
+- Even though this is just a practice/small project, let's have data stored somewhere (like JSON, APIs usually return json) instead of RAM.
+
+- In save_books() function in Library.py I used with open(...) instead of file = open(...) because I need to remember to close when I open file by former way. with open(...) closes the file automatically.
+
 
 ## Steps I take when initializing a project
     - create folder and files structure

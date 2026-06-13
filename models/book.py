@@ -19,4 +19,22 @@ class Book:
     def return_book(self) -> None:
         self.available = True
 
+    # to save books in a json file, aka dictionary
+    def to_dict(self) -> dict:
 
+        return {
+            "title": self.title,
+            "author": self.author,
+            "year": self.year,
+            "available": self.available
+        }
+    
+    # to convert from json to our Book obj
+    @classmethod
+    def from_dict(cls, data):
+        return cls(
+            title=data["title"],
+            author=data["author"],
+            year=data["year"],
+            available=data["available"]
+        )
