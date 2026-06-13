@@ -1,0 +1,14 @@
+[
+    {
+        "title": "A Story",
+        "author": "Fatima Salahi",
+        "year": 2022,
+        "available": true
+    },
+    {
+        "title": "Another Story",
+        "author": "Fatima Salahi",
+        "year": 2023,
+        "available": true
+    }
+]
