@@ -31,7 +31,7 @@ class Library:
 
     def search_book(self, keyword : str) -> list[str]:
         return[
-                book.title
+                book
                 for book in self.books
                 if keyword.lower() in book.title.lower()
         ]
