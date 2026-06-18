@@ -9,6 +9,12 @@
         "title": "Another Story",
         "author": "Fatima Salahi",
         "year": 2023,
+        "available": false
+    },
+    {
+        "title": "let me go",
+        "author": "harry P",
+        "year": 2022,
         "available": true
     }
 ]
