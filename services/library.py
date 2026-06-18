@@ -87,3 +87,17 @@ class Library:
                 self.books.append(book)
         except Exception as e:
             print("An unexpected error happened in load_books() function: ", e)
+
+    def choose_one_book(self, keyword : str) -> Book:
+        searched_book = self.search_book(keyword)
+        searched_book_len = len(searched_book)
+        if searched_book_len > 1:
+            print("There are multiple books with this search, please be more specific.")
+            for book in searched_book:
+                print(book.title)
+            return None
+        elif searched_book_len == 1:
+            return searched_book[0]
+        elif searched_book_len == 0:
+            print("Sorry! Our library doesn't have this book.")
+            return None
