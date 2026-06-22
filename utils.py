@@ -1,3 +1,7 @@
+from models.book import Book
+from services.library import Library
+import exceptions
+
 class Utils:
     def __init__(self):
         pass  
@@ -8,4 +12,102 @@ class Utils:
             return False
         else:
             return True
-        
+    
+
+    def menu(self, library) -> None:
+        while True:
+
+            print("\nLibrary Menu")
+
+            print("1. Add Book")
+            print("2. View Books")
+            print("3. Borrow Book")
+            print("4. Return Book")
+            print("5. Search Book")
+            print("6. Save Books")
+            print("7. Exit")
+
+            try: #handles menu option input
+                choice = input("Choose an option: ").strip() #to remove white space from both ends of the string
+
+                if choice == "1":
+                    print("Add book: ")
+                    title = input("Title: ").strip()
+                    if not title:
+                        print("Title can not be empty.")
+                        continue
+                    author = input("Author: ").strip()
+                    if not author:
+                        print("Author can not be empty.")
+                        continue
+                    year = int(input("Year: "))
+                    if self.year_validation(year):
+                        book = Book(title, author, year, True)
+                        library.add_book(book)
+                        print("The book is added to the library.")
+                    else:
+                        print("Please enter a correct format for year.")
+                        continue
+
+                elif choice == "2":
+                    library.show_books()
+
+                elif choice == "3":
+                    print("Borrow book: ")
+                    title = input("Title: ").strip()
+                    if not title:
+                        print("Title can not be empty.")
+                        continue
+                    selected_book = library.choose_one_book(title)
+                    if selected_book and selected_book.available:
+                        selected_book.borrow()
+                        print("You borrowed the book: ", selected_book.title, " for 2 weeks!")
+                    elif selected_book and not selected_book.available:
+                        print("Currently this book is not available to borrow!")
+
+                elif choice == "4":
+                    print("Return book: ")
+                    title = input("Title: ").strip()
+                    if not title:
+                        print("Title can not be empty.")
+                        continue
+                    selected_book = library.choose_one_book(title)
+                    if selected_book:
+                        selected_book.return_book()
+                        print("You returned the book [", selected_book.title, "]. Thanks!")
+
+                elif choice == "5":
+                    title = input("What is the title you are looking for? ").strip()
+                    if not title:
+                        print("Title can not be empty.")
+                        continue
+                    matching_books = library.search_book(title)
+                    if len(matching_books) >= 1:
+                        print("Here are the books with your search:")
+                        for book in matching_books:
+                            print(
+                                f"Title: {book.title} \t| "
+                                f"Author: {book.author} \t| "
+                                f"Available: {book.available}")
+                    else:
+                        print("There was no result for this search!")
+
+                elif choice == "6":
+                    library.save_books()
+                    print("Books are saved!")
+
+                elif choice == "7":
+                    library.save_books()
+                    print("Goodbye!")
+                    break
+
+                else:
+                    raise exceptions.InvalidMenuInput(f"'{choice}' is not an option")
+            except exceptions.InvalidMenuInput:
+                print(f"'{choice}' is not an option")
+
+            # a simpler way to handle invalid input:
+            # valid_choices = {"1", "2", "3", "4", "5", "6", "7"}
+            # if choice not in valid_choices:
+            #     print("Invalid option.")
+            #     continue
