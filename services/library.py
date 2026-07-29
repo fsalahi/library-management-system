@@ -8,41 +8,68 @@ class Library:
             self,
             books
     ) -> None:
-        self.books : list[Book] = []
+        #self.books : list[Book] = []
+        self.books : dict = {} # key: book.tilte, value: book
+
+
+    def load_books(self) -> None:
+        try:
+            with open("data/books.json", "r") as file:
+                # 1. Load the data (this will be a list of dicts)
+                loaded_list = json.load(file)
+                # 2. Reset self.books to an empty dictionary
+                self.books = {}
+                
+                # 3. Populate dictionary using the title as the key
+                for book_data in loaded_list.values():
+                    title = book_data.get("title")
+                    if title:
+                        self.books[title] = book_data
+                    else:
+                        print("Warning: Found a book with a missing title field!")
+                        
+        except FileNotFoundError:
+            print("Error: The file data/books.json was not found.")
+        except Exception as e:
+            print("An unexpected error happened in load_books() function: ", e)
+
+
 
     def add_book(self, book : Book) -> None:
-        self.books.append(book)
+        self.books[book.title] = book.to_dict()
 
     
     def show_books(self) -> None:
-        for book in self.books:
-            print(book.title)
+        # for book in self.books:
+        #     print(book.title)
+        for key in self.books:
+            print(key)
 
 
 
-    #practice better coding
-    def available_books(self) -> list[str]:
+    def available_books(self) -> dict:
+        return {
+                book["title"] : book
+                for book in self.books.values()
+                if book["available"]
+        }
+
+
+    def search_book(self, keyword: str) -> list[Book]:
         return [
-                book.title 
-                for book in self.books
-                if book.available
-            ]
-
-
-    def search_book(self, keyword : str) -> list[str]:
-        return[
-                book
-                for book in self.books
-                if keyword.lower() in book.title.lower()
+            Book(**book)  #creates a Book instance from the dictionary
+            for book in self.books.values()
+            if keyword.lower() in book["title"].lower()
         ]
 
     
     def remove_book(self, bookObj : Book) -> None:
         try:
-            for book in self.books:
-                if book.title == bookObj.title and book.author == bookObj.author:
-                    print("Success! The book ", bookObj.title, " was removed.")
-                    self.books.remove(book)
+            for book in self.books.values():
+                if book["title"] == bookObj.title and book["author"] == bookObj.author:
+                    del self.books[bookObj.title] #self.books.pop(book["title"])
+                    print("Success! The book [", bookObj.title, "] was removed.")
+                    self.save_books()
                     return
             
             raise exceptions.BookNotFoundError(f"'{bookObj.title}' not found.")
@@ -56,37 +83,18 @@ class Library:
     
     def save_books(self) -> None:
         try:
-            books_data = [
-                book.to_dict()
-                for book in self.books
-            ]
             with open(
                 "data/books.json",
                 "w" #overwrite if exists, create otherwise.
             ) as file:
                 json.dump(
-                books_data,
+                self.books,
                 file,
                 indent=4 # readabality purposes: adding a newline and 4 spaces for each level of nesting
             )
         except Exception as e:
             print("An unexpected error happened in save_books() function: ", e)
 
-            
-    def load_books(self) -> None:
-        try:
-            with open(
-                "data/books.json",
-                "r"
-            ) as file:
-
-                data = json.load(file)
-            
-            for book_data in data:
-                book = Book.from_dict(book_data)
-                self.books.append(book)
-        except Exception as e:
-            print("An unexpected error happened in load_books() function: ", e)
 
     def choose_one_book(self, keyword : str) -> Book:
         searched_book = self.search_book(keyword)
