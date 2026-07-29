@@ -4,6 +4,7 @@
 - self in classes: represents the specific instance of the class that is currently being built or called. In python, objects are explicitly passed as the first argument of the class.
 - __init__: automatic setup to configure data the moment we instantiate a class
 - Simply put, we need __init__ to set up object's data, and self to remember that data later.
+- Review again your code on Library.py -> search_book(). You learned to instantiate Book right when iterating over dictionary.
 
 
 ## Better coding practices
@@ -23,6 +24,10 @@
 
 - In save_books() function in Library.py I used with open(...) instead of file = open(...) because I need to remember to close when I open file by former way. with open(...) closes the file automatically.
 
+- Restructure the library class as: change books from list to dict in order to reduce complexity time from O(n) to O(1)
+
+
+
 
 ## Steps I take when initializing a project
     - create folder and files structure
@@ -35,3 +40,7 @@
     connect local git to github (git remote add origin [url to repository])
     - git push -u origin main
 
+## To Do:
+- Currently: search only by title -> To do: by author, etc
+- Currently: Removes book by title -> To do: make sure you remove only one book and the right one
+- 
